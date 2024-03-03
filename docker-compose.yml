@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  backend1:
+    build: ../VS/BackendGymApp/BackendTraining
+    ports:
+      - "8081:8082"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network
+
+  backend2:
+    build: ../VS/BackendGymApp/BackendDiet
+    ports:
+      - "8083:8084"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-network
+
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend1
+      - backend2
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
