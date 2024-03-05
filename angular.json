@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "FrontendGymApp:build:production"
+              "buildTarget": "FrontendGymApp:build:production"
             },
             "development": {
-              "browserTarget": "FrontendGymApp:build:development"
+              "buildTarget": "FrontendGymApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "FrontendGymApp:build"
+            "buildTarget": "FrontendGymApp:build"
           }
         },
         "test": {
