@@ -34,3 +34,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # SonarCloud token for authentication
+      with:
+        args: >
+          -Dsonar.projectKey=AmineFontys_BackendGymApp
+          -Dsonar.organization=aminefontys
+          -Dsonar.sources=.
+      # Include any other necessary SonarScanner parameters here
