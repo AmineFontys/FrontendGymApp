@@ -1,0 +1,42 @@
+name: Angular CI with SonarCloud
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build and analyze on SonarCloud
+    runs-on: ubuntu-latest  # Keep using Ubuntu unless you have Windows-specific needs
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Required for SonarCloud's blame information
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'  # Updated to match your Node.js version
+        cache: 'npm'  # Caches npm modules
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token for authentication
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # SonarCloud token for authentication
+      with:
+        args: >
+          -Dsonar.projectKey=AmineFontys_BackendGymApp
+          -Dsonar.organization=aminefontys
+          -Dsonar.sources=.
+      # Include any other necessary SonarScanner parameters here
