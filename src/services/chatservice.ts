@@ -1,59 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
+import * as signalR from '@aspnet/signalr';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private chatSocket: WebSocketSubject<any>;
-  private messageSubject: Subject<any> = new Subject<any>();
+  private connection: signalR.HubConnection;
 
   constructor() {
-    const wsConfig: WebSocketSubjectConfig<any> = {
-      url: 'wss://localhost:32787/ws',
-      deserializer: msg => {
-        const fullMessage = msg.data;
-        try {
-          // Identify the point where the JSON part starts
-          const separatorIndex = fullMessage.indexOf(' says: ');
-          const identifier = fullMessage.substring(0, separatorIndex);
-          const jsonPart = fullMessage.substring(separatorIndex + 7).trim(); // 7 to skip ' says: '
-
-          if (/^[\{].*[\}]$/.test(jsonPart)) {
-            const messageObj = JSON.parse(jsonPart);
-            return { id: identifier, text: messageObj.text };  // Return structured message
-          }
-          // Fallback to handle unexpected formats
-          return { id: identifier, text: jsonPart };
-        } catch (error) {
-          console.error('Failed to parse message:', fullMessage, error);
-          return { id: 'Parsing error', text: fullMessage };  // Error handling
-        }
-      }
-    };
-
-    this.chatSocket = webSocket(wsConfig);
-    this.chatSocket.subscribe(
-      msg => {
-        if (msg) {
-          this.messageSubject.next(msg);
-        }
-      },
-      err => console.error('WebSocket error:', err),
-      () => console.log('WebSocket connection completed.')
-    );
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:32771/myHub')
+      .build();
+    this.connection.start().catch(err => console.error(err));
   }
 
-  getMessages(): Observable<any> {
-    return this.messageSubject.asObservable();
+  getData(): Observable<string> {
+    return new Observable(observer => {
+      this.connection.on('data', data => {
+        observer.next(data);
+      });
+    });
   }
 
-  sendMessage(message: any): void {
-    this.chatSocket.next(message);
-  }
-
-  close(): void {
-    this.chatSocket.complete();
-  }
+  sendMessage(message: string): Promise<void> {
+    return this.connection.invoke('SendData', message)
+        .catch(err => console.error(err));
+    }
 }

@@ -12,7 +12,11 @@ export class LoginComponent {
 
 constructor(private router: Router) { }
 navigateToChat(): void {
-  this.router.navigate(['/chat']);  // Navigate to the chat page
+  this.router.navigate(['/chat']);
 }
+navigateToTrainerHomepage(): void {
+  this.router.navigate(['/trainer-homepage']);
 
+
+}
 }
