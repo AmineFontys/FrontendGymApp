@@ -7,7 +7,9 @@ import { AppComponent } from './app.component'
 import { ChatComponent } from './chat/chat.component'
 import { ChatService } from '../services/ChatService'
 import { NavbarComponent } from "./navbar/navbar.component";
-import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,9 @@ import {NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
         FormsModule,
         AppRoutingModule,
         NavbarComponent,
-        NgbCollapseModule
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule
     ]
 })
 export class AppModule { }
