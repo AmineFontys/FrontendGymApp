@@ -15,6 +15,7 @@ navigateToChat(): void {
   this.router.navigate(['/chat']);
 }
 navigateToTrainerHomepage(): void {
+  localStorage.setItem('role', 'trainer');
   this.router.navigate(['/trainer-homepage']);
 
 
