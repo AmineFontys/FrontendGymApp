@@ -2,6 +2,7 @@ version: '3.8'
 services:
   backend1:
     build: ../VS/BackendGymApp/BackendTraining
+    image: yourusername/backend1:latest
     ports:
       - "8081:8082"
     environment:
@@ -11,6 +12,7 @@ services:
 
   backend2:
     build: ../VS/BackendGymApp/BackendDiet
+    image: yourusername/backend2:latest
     ports:
       - "8083:8084"
     environment:
@@ -20,6 +22,7 @@ services:
 
   frontend:
     build: .
+    image: yourusername/frontend:latest
     ports:
       - "80:80"
     depends_on:
