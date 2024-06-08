@@ -18,8 +18,7 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-    - name: Check TypeScript version
-      run: npx typescript --version
+      
     - name: Build Angular project
       run: npm run build -- --configuration production
 
