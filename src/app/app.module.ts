@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { ChatComponent } from './chat/chat.component'
-import { ChatService } from '../services/ChatService'
+import { ChatService } from './services/chatservice'
 import { NavbarComponent } from "./navbar/navbar.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
