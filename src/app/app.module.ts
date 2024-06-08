@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CreateTrainerComponent } from './create-trainer/create-trainer.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { CreateTrainingComponent } from './create-training/create-training.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { CreateTrainingComponent } from './create-training/create-training.compo
         CreateTrainingComponent
 
     ],
-    providers: [ChatService],
+    providers: [ChatService, provideAnimationsAsync()],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
