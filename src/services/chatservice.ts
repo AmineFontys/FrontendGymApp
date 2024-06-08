@@ -12,12 +12,12 @@ export class ChatService {
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:32771/myHub')
       .build();
-    this.connection.start().catch(err => console.error(err));
+    this.connection.start().catch((err: any) => console.error(err));
   }
 
   getData(): Observable<string> {
     return new Observable(observer => {
-      this.connection.on('data', data => {
+      this.connection.on('data', (data: string | undefined) => {
         observer.next(data);
       });
     });
@@ -25,6 +25,6 @@ export class ChatService {
 
   sendMessage(message: string): Promise<void> {
     return this.connection.invoke('SendData', message)
-        .catch(err => console.error(err));
+        .catch((err: any) => console.error(err));
     }
 }
