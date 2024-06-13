@@ -1,27 +1,23 @@
 version: '3.8'
 services:
   backend1:
-    build: ../VS/BackendGymApp/BackendTraining
+    image: gymapptrainingapi:latest  # Use the tag you used to build your Docker image
     ports:
-      - "8081:8082"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - "8081:8082"  # Map the ports as needed (host:container)
     networks:
       - app-network
 
   backend2:
-    build: ../VS/BackendGymApp/BackendDiet
+    image: gymappdietapi:latest  # Use the tag you used to build your Docker image
     ports:
-      - "8083:8084"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - "8083:8084"  # Map the ports as needed (host:container)
     networks:
       - app-network
 
   frontend:
     build: .
     ports:
-      - "80:80"
+      - "80:80"  # Map the port to access the frontend
     depends_on:
       - backend1
       - backend2
