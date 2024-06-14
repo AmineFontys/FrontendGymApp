@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../models/trainer.model';
 import { TrainerService } from '../services/trainer.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CreateTrainerComponent implements OnInit {
   User!: FormGroup;
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private trainerservice: TrainerService, private router: Router) {}
 
@@ -18,32 +19,42 @@ export class CreateTrainerComponent implements OnInit {
     this.User = this.fb.group({
       firstName: [''],
       surName: [''],
-      email: [''],
-      phoneNumber: [''],
-      birthDate: [''],
-      isMale: true, // Default set as Male
-      role: [1] // Default role
+      email: ['', [Validators.required, Validators.email]], 
+    phoneNumber: [''],
+    birthDate: ['', [this.pastDateValidator]],
+      isMale: true, 
+      role: [1] 
     });
   }
 
   onSubmit(): void {
     const formValue = {
       ...this.User.value,
-      isMale: this.User.value.isMale === 'true', // Add null check
+      isMale: this.User.value.isMale === 'true', 
     };
 
     console.log(formValue);
     this.createTrainer(formValue);
   }
-
+  pastDateValidator(control: AbstractControl): { [key: string]: any } | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    const birthDate = new Date(control.value);
+  
+    if (birthDate >= today) {
+      return { 'pastDate': true }; 
+    }
+    return null; 
+  }
   createTrainer(formValue: any): void {
     this.trainerservice.createTrainer(formValue).subscribe({
       next: (response) => {
         console.log('Trainer created successfully', response);
-        this.router.navigate(['/trainer']); // Navigate to the trainer view on success
+        this.router.navigate(['/trainer']); 
       },
       error: (error) => {
         console.error('Error:', error);
+        this.errorMessage = 'Failed to create trainer due to server error'; 
       }
     });
   }

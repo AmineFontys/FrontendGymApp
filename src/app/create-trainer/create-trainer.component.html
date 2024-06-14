@@ -1,26 +1,48 @@
 <div class="trainer-form-container">
-    <form [formGroup]="User" (ngSubmit)="onSubmit()">
+  <form [formGroup]="User" (ngSubmit)="onSubmit()">
+    <div>
       <label for="firstName">First Name:</label>
       <input type="text" id="firstName" formControlName="firstName">
+    </div>
 
+    <div>
       <label for="surName">Surname:</label>
       <input type="text" id="surName" formControlName="surName">
+    </div>
 
+    <div>
       <label for="email">Email:</label>
       <input type="email" id="email" formControlName="email">
+      <div *ngIf="User.controls['email'].touched && User.controls['email'].errors">
+        <div *ngIf="User.controls['email'].errors['required']">
+          Email is required.
+        </div>
+        <div *ngIf="User.controls['email'].errors['email']">
+          Please enter a valid email.
+        </div>
+      </div>
+    </div>
 
+    <div>
       <label for="phoneNumber">Phone Number:</label>
       <input type="text" id="phoneNumber" formControlName="phoneNumber">
+    </div>
 
+    <div>
       <label for="birthDate">Birth Date:</label>
       <input type="date" id="birthDate" formControlName="birthDate">
-
-      <label>Gender:</label>
-      <div>
-        <input type="radio" id="male" formControlName="isMale" value="true"> Male
-        <input type="radio" id="female" formControlName="isMale" value="false"> Female
+      <div *ngIf="User.controls['birthDate'].touched && User.controls['birthDate'].errors?.['pastDate']">
+        Birthdate must be in the past.
       </div>
+    </div>
 
-      <button type="submit">Add Trainer</button>
-    </form>
-  </div>
+    <div>
+      <label>Gender:</label>
+      <input type="radio" id="male" formControlName="isMale" value="true" checked> Male
+      <input type="radio" id="female" formControlName="isMale" value="false"> Female
+    </div>
+
+    <button type="submit" [disabled]="!User.valid">Add Trainer</button>
+  </form>
+</div>
+

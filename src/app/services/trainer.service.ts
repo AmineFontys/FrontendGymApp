@@ -9,7 +9,7 @@ import { User } from '../models/trainer.model';
 })
 
 export class TrainerService {
-    private apiUrl = 'https://localhost:32769/api'; 
+    private apiUrl = 'https://localhost:32775/api'; 
   
     constructor(private http: HttpClient) { }
 
