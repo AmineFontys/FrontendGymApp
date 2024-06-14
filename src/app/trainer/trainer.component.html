@@ -2,7 +2,7 @@
     <aside class="sidebar">
         <button type="button" (click)="NavigateToCreateTrainer()">Add Trainer</button>
         <button type="button" (click)="updateTrainer()" [disabled]="!selectedTrainerId">Update Trainer</button>
-        <button type="button" (click)="deleteTrainer()" [disabled]="!selectedTrainerId">Delete Trainer</button>
+        <button type="button" id="deleteTrainer" (click)="deleteTrainer()" [disabled]="!selectedTrainerId">Delete Trainer</button>
     </aside>
     <section class="content">
         <table class="custom-table">
