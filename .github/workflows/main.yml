@@ -55,7 +55,7 @@ jobs:
         push: true
         tags: aminefontys/frontendgymapp-frontend:latest
 
-  docker-compose-deploy:
+  docker-compose-build-and-push:
     needs: build-and-push-docker
     runs-on: ubuntu-latest
 
