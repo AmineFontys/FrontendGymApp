@@ -1,13 +1,13 @@
 <div class="trainer-form-container">
   <form [formGroup]="User" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" formControlName="firstName">
+    <div *ngIf="User.controls['firstName'].errors">
+      <div *ngIf="User.controls['firstName'].errors['required']">First name is required.</div>
+      <div *ngIf="User.controls['firstName'].errors['pattern']">First name contains invalid characters.</div>
     </div>
 
-    <div>
-      <label for="surName">Surname:</label>
-      <input type="text" id="surName" formControlName="surName">
+    <div *ngIf="User.controls['surName'].errors">
+      <div *ngIf="User.controls['surName'].errors['required']">Surname is required.</div>
+      <div *ngIf="User.controls['surName'].errors['pattern']">Surname contains invalid characters.</div>
     </div>
 
     <div>

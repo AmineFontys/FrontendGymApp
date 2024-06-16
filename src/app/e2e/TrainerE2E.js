@@ -40,27 +40,27 @@ async function testDeleteTrainer(driver) {
 }
 async function testInvalidEmailForm(driver) {
   try {
-    // Navigate to the trainer creation page
+   
     await driver.get('http://localhost:4200/create-trainer');
 
-    // Fill out the form with an invalid email
+    
     await driver.findElement(By.id('firstName')).sendKeys('Jane');
     await driver.findElement(By.id('surName')).sendKeys('Smith');
-    await driver.findElement(By.id('email')).sendKeys('jane.smith'); // Ongeldig e-mailadres
+    await driver.findElement(By.id('email')).sendKeys('jane.smith'); 
     await driver.findElement(By.id('phoneNumber')).sendKeys('1234567890');
     await driver.findElement(By.id('birthDate')).sendKeys('1985-12-15', Key.TAB);
     await driver.findElement(By.id('female')).click();
 
-    // Submit the form
+    
     await driver.findElement(By.css('button[type="submit"]')).click();
 
-    // Check for error message
+    
     let errorMessage = await driver.wait(until.elementLocated(By.css('.error-message')), 5000);
     assert(await errorMessage.getText(), 'Invalid email format', "The error message should indicate an invalid email format");
 
   } catch (error) {
     console.error('An error occurred during the invalid email test:', error);
-    throw error; // Further action or logging might be required
+    throw error; 
   }
 }
 
@@ -76,7 +76,7 @@ async function runTestsWithInvalidInput() {
   }
 }
 
-runTestsWithInvalidInput().catch(console.error);
+
 
 
 async function runTests() {
@@ -95,5 +95,6 @@ async function runTests() {
 }
 
 runTests().catch(console.error);
+//runTestsWithInvalidInput().catch(console.error);
 
 

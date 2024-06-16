@@ -17,11 +17,11 @@ export class CreateTrainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.User = this.fb.group({
-      firstName: [''],
-      surName: [''],
+      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
+      surName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]*$/)]],
       email: ['', [Validators.required, Validators.email]], 
-    phoneNumber: [''],
-    birthDate: ['', [this.pastDateValidator]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      birthDate: ['', [this.pastDateValidator]],
       isMale: true, 
       role: [1] 
     });
